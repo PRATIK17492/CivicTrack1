@@ -3,175 +3,235 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>CivicTrack - Submit Complaint</title>
+  <title>CivicTrack - Smart Complaint Portal</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      max-width: 600px;
-      margin: 40px auto;
-      padding: 20px;
-      background: #f9f9f9;
-      border-radius: 8px;
+      background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
-    h1, h2 {
+
+    .container {
+      background: #fff;
+      width: 90%;
+      max-width: 600px;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #003366;
+      margin-bottom: 10px;
+    }
+
+    h2 {
       text-align: center;
       color: #333;
     }
-    label {
+
+    .btn {
       display: block;
-      margin-top: 15px;
-      font-weight: bold;
-    }
-    input, select, textarea {
       width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
-    button {
-      margin-top: 20px;
-      padding: 10px 15px;
+      margin: 15px 0;
+      padding: 12px;
       background-color: #007bff;
-      border: none;
-      border-radius: 5px;
       color: white;
+      border: none;
+      border-radius: 6px;
       font-size: 16px;
       cursor: pointer;
+      transition: background 0.3s;
     }
-    button:hover {
+
+    .btn:hover {
       background-color: #0056b3;
     }
-    .result {
+
+    .hidden {
+      display: none;
+    }
+
+    label { display: block; margin-top: 15px; font-weight: bold; }
+    input, select, textarea {
+      width: 100%; padding: 8px; margin-top: 5px;
+      border: 1px solid #ccc; border-radius: 5px;
+    }
+
+    .result, .status-result {
       margin-top: 20px;
-      padding: 10px;
-      background-color: #e9ffe9;
-      border: 1px solid #4CAF50;
-      border-radius: 5px;
-      color: #2e7d32;
-      display: none;
-    }
-    .status-section {
-      margin-top: 40px;
-      padding-top: 20px;
-      border-top: 2px solid #ddd;
-    }
-    .status-result {
-      margin-top: 15px;
-      padding: 10px;
-      background: #eef6ff;
-      border: 1px solid #007bff;
+      padding: 12px;
       border-radius: 5px;
       display: none;
+    }
+
+    .result.success { background: #e9ffe9; border: 1px solid #4CAF50; color: #2e7d32; }
+    .result.error, .status-result.error { background: #ffe9e9; border: 1px solid red; color: #b30000; }
+    .status-result.success { background: #eef6ff; border: 1px solid #007bff; }
+
+    .back-btn {
+      background-color: #6c757d;
+      margin-top: 10px;
+    }
+
+    .back-btn:hover {
+      background-color: #555;
     }
   </style>
 </head>
 <body>
+  <div class="container">
 
-  <h1><b><i><u>CivicTrack</u></i></b></h1>
-  <h2>Submit a Complaint</h2>
+    <!-- HOME PAGE -->
+    <div id="homePage">
+      <h1><b><i><u>CivicTrack</u></i></b></h1>
+      <h2>Welcome to Smart Civic Complaint System</h2>
+      <p style="text-align:center; color:#555;">Empowering citizens to make their city better.</p>
+      <button class="btn" id="goSubmit">Submit a Complaint</button>
+      <button class="btn" id="goStatus">Check Complaint Status</button>
+    </div>
 
-  <form id="complaintForm" enctype="multipart/form-data">
-    <label for="category">Issue Category:</label>
-    <select id="category" name="category" required>
-      <option value="">--Select--</option>
-      <option value="Garbage">Garbage</option>
-      <option value="Streetlight">Streetlight</option>
-      <option value="Water Leakage">Water Leakage</option>
-      <option value="Road Damage">Road Damage</option>
-      <option value="Other">Other</option>
-    </select>
+    <!-- SUBMIT COMPLAINT PAGE -->
+    <div id="submitPage" class="hidden">
+      <h2>Submit a Complaint</h2>
+      <form id="complaintForm" enctype="multipart/form-data">
+        <label for="category">Issue Category:</label>
+        <select id="category" required>
+          <option value="">--Select--</option>
+          <option>Garbage</option>
+          <option>Streetlight</option>
+          <option>Water Leakage</option>
+          <option>Road Damage</option>
+          <option>Other</option>
+        </select>
 
-    <label for="description">Description:</label>
-    <textarea id="description" name="description" rows="4" placeholder="Describe the issue..." required></textarea>
+        <label for="description">Description:</label>
+        <textarea id="description" rows="4" placeholder="Describe the issue..." required></textarea>
 
-    <label for="location">Location (Area/Street):</label>
-    <input type="text" id="location" name="location" placeholder="Enter location" required />
+        <label for="location">Location (Area/Street):</label>
+        <input type="text" id="location" placeholder="Enter location" required />
 
-    <label for="photo">Upload Photo (optional):</label>
-    <input type="file" id="photo" name="photo" accept="image/*" />
+        <label for="photo">Upload Photo (optional):</label>
+        <input type="file" id="photo" accept="image/*" />
 
-    <button type="submit">Submit Complaint</button>
-  </form>
+        <button type="submit" class="btn">Submit Complaint</button>
+      </form>
 
-  <div class="result" id="submitResult"></div>
+      <div class="result" id="submitResult"></div>
+      <button class="btn back-btn" id="backHome1">⬅ Back to Home</button>
+    </div>
 
-  <div class="status-section">
-    <h2>Check Complaint Status</h2>
-    <label for="complaintId">Enter Complaint ID:</label>
-    <input type="number" id="complaintId" placeholder="Enter your complaint ID" />
-    <button id="checkStatusBtn">Check Status</button>
+    <!-- CHECK STATUS PAGE -->
+    <div id="statusPage" class="hidden">
+      <h2>Check Complaint Status</h2>
+      <label for="complaintId">Enter Complaint ID:</label>
+      <input type="number" id="complaintId" placeholder="Enter your complaint ID" />
+      <button class="btn" id="checkStatusBtn">Check Status</button>
+      <div class="status-result" id="statusResult"></div>
+      <button class="btn back-btn" id="backHome2">⬅ Back to Home</button>
+    </div>
 
-    <div class="status-result" id="statusResult"></div>
   </div>
 
   <script>
+    // Page navigation
+    const homePage = document.getElementById('homePage');
+    const submitPage = document.getElementById('submitPage');
+    const statusPage = document.getElementById('statusPage');
+
+    document.getElementById('goSubmit').onclick = () => {
+      homePage.classList.add('hidden');
+      submitPage.classList.remove('hidden');
+    };
+
+    document.getElementById('goStatus').onclick = () => {
+      homePage.classList.add('hidden');
+      statusPage.classList.remove('hidden');
+    };
+
+    document.getElementById('backHome1').onclick = () => {
+      submitPage.classList.add('hidden');
+      homePage.classList.remove('hidden');
+    };
+
+    document.getElementById('backHome2').onclick = () => {
+      statusPage.classList.add('hidden');
+      homePage.classList.remove('hidden');
+    };
+
+    // Simulated database
+    const fakeDB = {};
+    let complaintCounter = 1;
+
     const form = document.getElementById('complaintForm');
     const resultDiv = document.getElementById('submitResult');
     const checkBtn = document.getElementById('checkStatusBtn');
     const statusResult = document.getElementById('statusResult');
 
-    // Handle complaint submission
-    form.addEventListener('submit', async (e) => {
+    // Handle Complaint Submission
+    form.addEventListener('submit', (e) => {
       e.preventDefault();
-      const formData = new FormData(form);
+      const category = document.getElementById('category').value;
+      const description = document.getElementById('description').value;
+      const location = document.getElementById('location').value;
+      const photo = document.getElementById('photo').files[0];
 
-      const res = await fetch('/api/complaints', {
-        method: 'POST',
-        body: formData
-      });
-
-      const data = await res.json();
-
-      if (data.success) {
-        resultDiv.style.display = 'block';
-        resultDiv.innerHTML = `
-          <strong>Complaint submitted successfully!</strong><br>
-          Your complaint ID is <b>${data.id}</b>.<br>
-          Use this ID to check your complaint progress below.
-        `;
-        form.reset();
-      } else {
-        resultDiv.style.display = 'block';
-        resultDiv.style.background = '#ffe9e9';
-        resultDiv.style.border = '1px solid red';
-        resultDiv.innerHTML = 'Failed to submit complaint.';
-      }
-    });
-
-    // Handle complaint status check
-    checkBtn.addEventListener('click', async () => {
-      const id = document.getElementById('complaintId').value.trim();
-      if (!id) {
-        alert('Please enter a complaint ID.');
+      if (!category || !description || !location) {
+        alert('Please fill all required fields.');
         return;
       }
 
-      const res = await fetch(`/api/complaints/${id}`);
-      const data = await res.json();
+      const id = complaintCounter++;
+      const complaint = {
+        id,
+        category,
+        description,
+        location,
+        status: 'Pending Review',
+        submittedAt: new Date(),
+        photo: photo ? URL.createObjectURL(photo) : null
+      };
 
-      if (data.error) {
+      fakeDB[id] = complaint;
+      resultDiv.className = 'result success';
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = `<strong>Complaint submitted successfully!</strong><br>
+        Your complaint ID is <b>${id}</b>.<br>
+        Use this ID to check your complaint status.`;
+      form.reset();
+    });
+
+    // Handle Status Check
+    checkBtn.addEventListener('click', () => {
+      const id = document.getElementById('complaintId').value.trim();
+      if (!id) { alert('Please enter a complaint ID.'); return; }
+
+      const data = fakeDB[id];
+      if (!data) {
+        statusResult.className = 'status-result error';
         statusResult.style.display = 'block';
-        statusResult.style.background = '#ffe9e9';
-        statusResult.style.border = '1px solid red';
-        statusResult.innerHTML = `<b>${data.error}</b>`;
-      } else {
-        statusResult.style.display = 'block';
-        statusResult.style.background = '#eef6ff';
-        statusResult.style.border = '1px solid #007bff';
-        statusResult.innerHTML = `
-          <strong>Complaint ID:</strong> ${data.id}<br>
-          <strong>Category:</strong> ${data.category}<br>
-          <strong>Description:</strong> ${data.description}<br>
-          <strong>Location:</strong> ${data.location}<br>
-          <strong>Status:</strong> <b>${data.status}</b><br>
-          <strong>Submitted At:</strong> ${new Date(data.submittedAt).toLocaleString()}
-          ${data.photo ? `<br><br><img src="${data.photo}" width="100%" style="max-width:300px;border-radius:8px;">` : ''}
-        `;
+        statusResult.innerHTML = `<b>No complaint found for ID ${id}</b>`;
+        return;
       }
+
+      statusResult.className = 'status-result success';
+      statusResult.style.display = 'block';
+      statusResult.innerHTML = `
+        <strong>Complaint ID:</strong> ${data.id}<br>
+        <strong>Category:</strong> ${data.category}<br>
+        <strong>Description:</strong> ${data.description}<br>
+        <strong>Location:</strong> ${data.location}<br>
+        <strong>Status:</strong> <b>${data.status}</b><br>
+        <strong>Submitted At:</strong> ${new Date(data.submittedAt).toLocaleString()}
+        ${data.photo ? `<br><br><img src="${data.photo}" width="100%" style="max-width:300px;border-radius:8px;">` : ''}
+      `;
     });
   </script>
-
 </body>
 </html>
