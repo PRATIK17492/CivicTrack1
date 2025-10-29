@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CivicTrack - Smart Complaint Portal</title>
+  <!-- Link CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+
+    <!-- HOME PAGE -->
+    <div id="homePage">
+      <h1><b><i><u>CivicTrack</u></i></b></h1>
+      <h2>Welcome to Smart Civic Complaint System</h2>
+      <p style="text-align:center; color:#555;">Empowering citizens to make their city better.</p>
+      <button class="btn" id="goSubmit">Submit a Complaint</button>
+      <button class="btn" id="goStatus">Check Complaint Status</button>
+    </div>
+
+    <!-- SUBMIT COMPLAINT PAGE -->
+    <div id="submitPage" class="hidden">
+      <h2>Submit a Complaint</h2>
+      <form id="complaintForm" enctype="multipart/form-data">
+        <label for="category">Issue Category:</label>
+        <select id="category" required>
+          <option value="">--Select--</option>
+          <option>Garbage</option>
+          <option>Streetlight</option>
+          <option>Water Leakage</option>
+          <option>Road Damage</option>
+          <option>Other</option>
+        </select>
+
+        <label for="description">Description:</label>
+        <textarea id="description" rows="4" placeholder="Describe the issue..." required></textarea>
+
+        <label for="location">Location (Area/Street):</label>
+        <input type="text" id="location" placeholder="Enter location" required />
+
+        <label for="photo">Upload Photo (optional):</label>
+        <input type="file" id="photo" accept="image/*" />
+
+        <button type="submit" class="btn">Submit Complaint</button>
+      </form>
+
+      <div class="result" id="submitResult"></div>
+      <button class="btn back-btn" id="backHome1">⬅ Back to Home</button>
+    </div>
+
+    <!-- CHECK STATUS PAGE -->
+    <div id="statusPage" class="hidden">
+      <h2>Check Complaint Status</h2>
+      <label for="complaintId">Enter Complaint ID:</label>
+      <input type="number" id="complaintId" placeholder="Enter your complaint ID" />
+      <button class="btn" id="checkStatusBtn">Check Status</button>
+      <div class="status-result" id="statusResult"></div>
+      <button class="btn back-btn" id="backHome2">⬅ Back to Home</button>
+    </div>
+
+  </div>
+
+  <!-- Link JS -->
+  <script src="script.js"></script>
+</body>
+</html>
